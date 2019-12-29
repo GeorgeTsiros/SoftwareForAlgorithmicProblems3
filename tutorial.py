@@ -11,9 +11,9 @@ import matplotlib.pyplot as plt
 print(tf.__version__)
 
 
-mnist = tf.keras.datasets.mnist
+mnist = tf.keras.datasets.mnist 									#inputfile
 (x_train, y_train),(x_test, y_test) = mnist.load_data()
-x_train = tf.keras.utils.normalize(x_train, axis=1)
+x_train = tf.keras.utils.normalize(x_train, axis=1)					#normalize
 x_test = tf.keras.utils.normalize(x_test, axis=1)
 
 #sequential type of model
@@ -36,7 +36,7 @@ model.add(tf.keras.layers.Dense(10, activation = tf.nn.softmax))
 #parameters of training
 model.compile(optimizer = 'adam',loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
 
-#train the modell
+#train the model
 model.fit(x_train, y_train, epochs = 3)
 
 #evaluate the model
