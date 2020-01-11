@@ -21,6 +21,8 @@ testingDataLabels = testingData.iloc[:, :1]
 testingDataValues = testingData.iloc[:, 1:]
 
 result = pretrainedmodel.predict(testingDataValues)
+# print to CSV instead of STDOUT
+# print(result)
 
 # Generate MAE Loss
 mae = keras.losses.MeanAbsoluteError()
