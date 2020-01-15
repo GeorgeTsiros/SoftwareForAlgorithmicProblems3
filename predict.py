@@ -10,8 +10,11 @@ keras.backend.set_epsilon(1e-2)
 np.set_printoptions(threshold=sys.maxsize)
 
 # Read files
-actualData = pd.read_csv('Datasets/actual.csv')
-testingData = pd.read_csv('Datasets/nn_representations.csv')
+inputFile = sys.argv[2]
+actualData = pd.read_csv(inputFile,header=None)
+
+testFile = sys.argv[2]
+testingData = pd.read_csv(testFile,header=None)
 
 actualDataLabels = actualData.iloc[:, :1]
 actualDataValues = actualData.iloc[:, 1:]
