@@ -4,14 +4,14 @@ import pandas as pd
 import sys
 from keras import layers, optimizers, losses, metrics
 from keras.models import load_model
+import csv
 
 # General Configurations
 keras.backend.set_epsilon(1e-2)
 np.set_printoptions(threshold=sys.maxsize)
 
 # Read files
-inputFile = sys.argv[2]
-actualData = pd.read_csv(inputFile,header=None)
+actualData = pd.read_csv('Datasets/actual.csv',header=None)
 
 testFile = sys.argv[2]
 testingData = pd.read_csv(testFile,header=None)
@@ -23,29 +23,29 @@ actualDataValues = actualDataValues.to_numpy()
 testingDataLabels = testingData.iloc[:, :1]
 testingDataValues = testingData.iloc[:, 1:]
 
-result = pretrainedmodel.predict(testingDataValues)
-# print to CSV instead of STDOUT
-# print(result)
+model= load_model('Datasets/WindDenseNN.h5')
+result = model.predict(testingDataValues)
 
 # Generate MAE Loss
 mae = keras.losses.MeanAbsoluteError()
-loss = mae(actualDataValues, result)
-print('MAE Loss: ', loss.numpy())  # Loss: 0.75
+lossmae = mae(actualDataValues, result)
+print('MAE Loss: ', lossmae.numpy())  # Loss: 0.75
 
 # Generate MSE Loss
 mse = keras.losses.MeanSquaredError()
-loss = mse(actualDataValues, result)
-print('MSE Loss: ', loss.numpy())  # Loss: 0.75
+lossmse = mse(actualDataValues, result)
+print('MSE Loss: ', lossmse.numpy())  # Loss: 0.75
 
 # Generate MAPE Loss
 mape = keras.losses.MeanAbsolutePercentageError()
-loss = mape(actualDataValues, result)
-print('MAPE Loss: ', loss.numpy())  # Loss: 5e+08
+lossmape = mape(actualDataValues, result)
+print('MAPE Loss: ', lossmape.numpy())  # Loss: 5e+08
 
-# actualDataValuesColumns = list()
-# for column in actualDataValues.T:
-#     actualDataValuesColumns.append(column)
+header = ['MAE: ' + str(lossmae.numpy()), ' MAPE: ' + str(lossmape.numpy()), ' MSE: ' + str(lossmse.numpy())]
 
-# resultColumns = list()
-# for column in result.T:
-#     resultColumns.append(column)
+combinedResults = np.concatenate((actualDataLabels, result), axis=1)
+with open('new_representation.csv', 'wt') as csv_file:
+    csv_writer = csv.writer(csv_file)
+    csv_writer.writerow(header) # write header
+
+pd.DataFrame(combinedResults).to_csv("new_representation.csv", mode='a')

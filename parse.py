@@ -3,7 +3,6 @@ import sys, getopt
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
-import matplotlib.pyplot as plt
 import pandas as pd
 import logging
 
