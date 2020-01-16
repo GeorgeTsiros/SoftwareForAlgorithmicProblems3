@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
           }
           cout << "   evaluation completed!" << endl;
           clock_t f = clock();
-          //cout << "time: " << (unsigned int)(f - s) / (double CLOCKS_PER_SEC) <<" (s)" << endl;
+          cout << "time: " << (unsigned int)(f - s) / (double CLOCKS_PER_SEC) <<" (s)" << endl;
         }
       }
     }
@@ -241,10 +241,10 @@ int main(int argc, char* argv[]) {
     }
     cout << "   evaluation completed!" << endl;
     clock_t f = clock();
-    //cout << "time: " << (unsigned int)(f - s) / (double CLOCKS_PER_SEC) <<" (s)" << endl;
+    cout << "time: " << (unsigned int)(f - s) / (double CLOCKS_PER_SEC) <<" (s)" << endl;
   }
   clock_t fin = clock();
-  //cout << "total time: " << (unsigned int)(fin - start) / (double CLOCKS_PER_SEC) <<" (s)" << endl;
+  cout << "total time: " << (unsigned int)(fin - start) / (double CLOCKS_PER_SEC) <<" (s)" << endl;
   cout << "Program is terminating... C ya!" << endl;
   return 0;
 };
