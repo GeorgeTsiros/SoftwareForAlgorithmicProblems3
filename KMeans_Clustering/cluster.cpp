@@ -1,6 +1,6 @@
 #include "./hFiles/headers.h"
 #include "./hFiles/cluster.h"
-#include "./hFiles/euclidean.h"
+#include "./hFiles/manhattan.h"
 #include "./hFiles/cosine.h"
 
 /*~cluster~*/
@@ -124,8 +124,8 @@ void cluster::pamUpdateCentroid(data &dataset) {
     while((j<pointsSize) && flag == 0) {
       double dis;
       int index2 = this->points[j];
-      if(datasetMetric == "euclidean")
-        dis = dataset.euclideanDis(index1, index2);
+      if(datasetMetric == "manhattan")
+        dis = dataset.manhattanDis(index1, index2);
       if(datasetMetric == "cosine")
         dis = dataset.cosineDis(index1, index2);
       sum += dis;

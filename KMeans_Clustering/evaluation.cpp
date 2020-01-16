@@ -1,6 +1,6 @@
 #include "./hFiles/headers.h"
 #include "./hFiles/evaluation.h"
-#include "./hFiles/euclidean.h"
+#include "./hFiles/manhattan.h"
 #include "./hFiles/cosine.h"
 
 //evaluate a cluster: Compute average s (i) over all i in some cluster
@@ -21,8 +21,8 @@ void silhouette(vector<cluster> clusters, data &dataset, string &outputFileName)
       double a = 0;
       int index = clusters[i].getPoint(j);
       vector<double> p = dataset.getdVector(index).getCoordinates();
-      if(dataset.getMetric() == "euclidean")
-        a = euclideanDistance(p, centroid);
+      if(dataset.getMetric() == "manhattan")
+        a = manhattanDistance(p, centroid);
       if(dataset.getMetric() == "cosine")
         a = cosineDistance(p, centroid);
       double b = -1;
@@ -30,8 +30,8 @@ void silhouette(vector<cluster> clusters, data &dataset, string &outputFileName)
         if(i != z) {
           double bb;
           vector<double> centroid2 = clusters[z].getCentroid();
-          if(dataset.getMetric() == "euclidean")
-            bb = euclideanDistance(p, centroid2);
+          if(dataset.getMetric() == "manhattan")
+            bb = manhattanDistance(p, centroid2);
           if(dataset.getMetric() == "cosine")
             bb = cosineDistance(p, centroid2);
           if((bb < b) || (b == -1))

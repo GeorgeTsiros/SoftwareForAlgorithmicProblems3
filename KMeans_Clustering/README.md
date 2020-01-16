@@ -2,7 +2,7 @@
 
 Implementation of algorithms for clustering n-dimensional vectors in C++ and validation of consistency within clusters with Sihouette's method. 
   
-For calculating distances between vectors, **euclidean** and **cosine** distances are supported. 
+For calculating distances between vectors, **manhattan** and **cosine** distances are supported. 
   
 In the **initialization stage**, the initial centroids of clusters can be selected either **randomly** or by using **K-Means++ algorithm**.
   
@@ -29,7 +29,7 @@ The **update** of every cluster's centroid, can be done by:
   
   *Algorithm: IxAxU*
   
-  *Metric: euclidean or cosine*
+  *Metric: manhattan or cosine*
   
   *CLUSTER-1 {size: <int>, centroid: <item_id> or coordinates of centroid(if <update method> is k-Means) }*
   
@@ -51,7 +51,7 @@ The **update** of every cluster's centroid, can be done by:
 ### Instructions to execute:
 ```./cluster –i <input file> –c <configuration file> -o <output file>```
 ###### Additional arguements:
-```-d <metric> ``` &nbsp;&nbsp; metric ∈ { euclidean (default), cosine }
+```-d <metric> ``` &nbsp;&nbsp; metric ∈ { manhattan (default), cosine }
 
 ```-I <initialization method> ``` &nbsp;&nbsp; initialization method ∈ { random (default), kmeans++ }
 

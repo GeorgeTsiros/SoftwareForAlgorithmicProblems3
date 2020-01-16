@@ -1,7 +1,7 @@
 #include "./hFiles/headers.h"
 #include "./hFiles/generalFunctions.h"
 #include "./hFiles/initialization.h"
-#include "./hFiles/euclidean.h"
+#include "./hFiles/manhattan.h"
 #include "./hFiles/cosine.h"
 
 //select randomly centroids for the clusters(uniform distribution)
@@ -40,8 +40,8 @@ vector<int> kMeansPlusPlus(data &dataset) {
         for(int j=0; j<centroids.size(); j++) {                                 //find the min distance from centroids
           double dis;
           vector<double> x2 = dataset.getdVector(centroids[j]).getCoordinates();
-          if(datasetMetric == "euclidean")
-            dis = euclideanDistance(x1, x2);
+          if(datasetMetric == "manhattan")
+            dis = manhattanDistance(x1, x2);
           if(datasetMetric == "cosine")
             dis = cosineDistance(x1, x2);
           if((dis < minDis) || (minDis == -1))

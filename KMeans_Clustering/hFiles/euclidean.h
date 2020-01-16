@@ -1,13 +1,13 @@
-#ifndef EUCLIDEAN_H
-#define EUCLIDEAN_H
+#ifndef manhattan_H
+#define manhattan_H
 
-int euclideanProject(dVector &p,vector<vector<double>> &v, vector<double> &t);
+int manhattanProject(dVector &p,vector<vector<double>> &v, vector<double> &t);
 
-vector<int> euclideanGenerateG(dVector &p, int k, vector<vector<double>> &v, vector<double> &t);
+vector<int> manhattanGenerateG(dVector &p, int k, vector<vector<double>> &v, vector<double> &t);
 
 int fHushFunction(vector<int> &g, vector<int> &r, int n);
 
-double euclideanDistance(vector<double> &x, vector<double> &y);
+double manhattanDistance(vector<double> &x, vector<double> &y);
 
 int cubeGenerateKey(dVector &p, int k, vector<vector<double>> &v, vector<double> &t);
 

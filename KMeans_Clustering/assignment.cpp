@@ -2,7 +2,7 @@
 #include "./hFiles/cluster.h"
 #include "./hFiles/assignment.h"
 #include "./hFiles/hashTable.h"
-#include "./hFiles/euclidean.h"
+#include "./hFiles/manhattan.h"
 #include "./hFiles/cosine.h"
 #include "./hFiles/generalFunctions.h"
 
@@ -17,8 +17,8 @@ void lloyd(vector<cluster> &clusters, data &dataset) {
     for(int j=0; j<numberOfClusters; j++) {                                     //find the min distance from centroids
       double dis;
       vector<double> x2 = clusters[j].getCentroid();
-      if(datasetMetric == "euclidean")
-        dis = euclideanDistance(x1, x2);
+      if(datasetMetric == "manhattan")
+        dis = manhattanDistance(x1, x2);
       if(datasetMetric == "cosine")
         dis = cosineDistance(x1, x2);
       if((dis < minDis) || (minDis == -1)) {
@@ -54,10 +54,10 @@ void LSH(vector<cluster> &clusters, data &dataset, vector<hashTable> &hTables, v
       for(int i=0; i<L; i++) {                                                  //in every hashtable
         vector<int> g;
         int f;
-        if(datasetMetric == "euclidean") {
+        if(datasetMetric == "manhattan") {
           vector<vector<double>> vs = hTables[i].getkVs();
           vector<double> ts = hTables[i].getkTs();
-          g = euclideanGenerateG(v, k, vs, ts);                                 //generate a g vector
+          g = manhattanGenerateG(v, k, vs, ts);                                 //generate a g vector
           f = fHushFunction(g, r, dataset.getN());                              //from that g -> generate fhushfunction
         }
         else if(datasetMetric == "cosine") {
@@ -70,10 +70,10 @@ void LSH(vector<cluster> &clusters, data &dataset, vector<hashTable> &hTables, v
           int jIndex = j->getIndex();
           if(finalized[jIndex] == 0) {
             double Distance;                                                    //calculate distance
-            if(datasetMetric == "euclidean" && j->getG() == g) {
+            if(datasetMetric == "manhattan" && j->getG() == g) {
               vector<double> x1 = v.getCoordinates();
               vector<double> x2 = dataset.getdVector(jIndex).getCoordinates();
-              Distance = euclideanDistance(x1, x2);
+              Distance = manhattanDistance(x1, x2);
               if( (Distance < Radius) && ( (dis[jIndex] == -1) || (dis[jIndex] > Distance) ) ) {                                                //if distance is acceptable
                 cl[jIndex] = c;
                 dis[jIndex] = Distance;
@@ -109,8 +109,8 @@ void LSH(vector<cluster> &clusters, data &dataset, vector<hashTable> &hTables, v
       for(int j=0; j<numberOfClusters; j++) {
         double dist;
         vector<double> x2 = clusters[j].getCentroid();
-        if(datasetMetric == "euclidean")
-          dist = euclideanDistance(x1, x2);
+        if(datasetMetric == "manhattan")
+          dist = manhattanDistance(x1, x2);
         if(datasetMetric == "cosine")
           dist = cosineDistance(x1, x2);
         if((dist < minDis) || (minDis == -1)) {
@@ -149,10 +149,10 @@ void cube(vector<cluster> &clusters, data &dataset, hashTable &hTable, vector<in
       dVector v = dataset.getdVector(curCentroid);                              //v = current centroid
       vector<int> g;
       int f;
-      if(datasetMetric == "euclidean") {
+      if(datasetMetric == "manhattan") {
         vector<vector<double>> vs = hTable.getkVs();
         vector<double> ts = hTable.getkTs();
-        g = euclideanGenerateG(v, k, vs, ts);                                   //generate a g vector
+        g = manhattanGenerateG(v, k, vs, ts);                                   //generate a g vector
         f = fHushFunction(g, r, dataset.getN());                                //from that g -> generate fhushfunction
       }
       else if(datasetMetric == "cosine") {
@@ -169,10 +169,10 @@ void cube(vector<cluster> &clusters, data &dataset, hashTable &hTable, vector<in
           int jIndex = j->getIndex();
           if(finalized[jIndex] == 0) {
             double Distance;                                                    //calculate distance
-            if(datasetMetric == "euclidean") {
+            if(datasetMetric == "manhattan") {
               vector<double> x1 = v.getCoordinates();
               vector<double> x2 = dataset.getdVector(jIndex).getCoordinates();
-              Distance = euclideanDistance(x1, x2);
+              Distance = manhattanDistance(x1, x2);
             }
             else if(datasetMetric == "cosine") {
               vector<double> x1 = v.getCoordinates();
@@ -224,8 +224,8 @@ void cube(vector<cluster> &clusters, data &dataset, hashTable &hTable, vector<in
         double dist;
         vector<double> x1 = dataset.getdVector(i).getCoordinates();
         vector<double> x2 = clusters[j].getCentroid();
-        if(datasetMetric == "euclidean")
-          dist = euclideanDistance(x1, x2);
+        if(datasetMetric == "manhattan")
+          dist = manhattanDistance(x1, x2);
         if(datasetMetric == "cosine")
           dist = cosineDistance(x1, x2);
         if((dist < minDis) || (minDis == -1)) {
@@ -252,8 +252,8 @@ double initRadius(vector<cluster> &clusters, string &datasetMetric) {
       if(i < j) {
         double dis;
         vector<double> x2 = clusters[j].getCentroid();
-        if(datasetMetric == "euclidean")
-          dis = euclideanDistance(x1, x2);
+        if(datasetMetric == "manhattan")
+          dis = manhattanDistance(x1, x2);
         if(datasetMetric == "cosine")
           dis = cosineDistance(x1, x2);
         if((dis < minDis) || (minDis == -1))

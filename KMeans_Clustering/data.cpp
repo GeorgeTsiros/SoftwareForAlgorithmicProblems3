@@ -1,6 +1,6 @@
 #include "./hFiles/headers.h"
 #include "./hFiles/data.h"
-#include "./hFiles/euclidean.h"
+#include "./hFiles/manhattan.h"
 #include "./hFiles/cosine.h"
 
 /*~dVector~*/
@@ -110,9 +110,9 @@ int data::getdVectorId(int i) {
 double data::linearSearchMinDistance(vector<double> &q) {
   double minDistance = -1;
   for(auto i=this->dVectors.begin(); i!=this->dVectors.end(); ++i) {
-      if(this->metric == "euclidean") {
+      if(this->metric == "manhattan") {
         vector<double> x = i->getCoordinates();
-        double dis = euclideanDistance(x ,q);
+        double dis = manhattanDistance(x ,q);
         if(minDistance == -1)
           minDistance = dis;
         else if(dis < minDistance) {
@@ -132,7 +132,7 @@ double data::linearSearchMinDistance(vector<double> &q) {
   return minDistance;
 };
 
-double data::euclideanDis(int index1 , int index2) {
+double data::manhattanDis(int index1 , int index2) {
   vector<double> x = this->dVectors[index1].getCoordinates();
   vector<double> y = this->dVectors[index2].getCoordinates();
   double distance = 0;

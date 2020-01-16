@@ -7,7 +7,7 @@
 #include "./hFiles/hashTable.h"
 #include "./hFiles/update.h"
 
-vector<string> supportedMetrics{"euclidean", "cosine"};
+vector<string> supportedMetrics{"manhattan", "cosine"};
 
 int numberOfClusters, numberOfHashFunctions, numberOfHashTables;
 int maxUpdateIterations, maxRangeSearchIterations;
@@ -80,13 +80,13 @@ int main(int argc, char* argv[]) {
   if(foundConfigurationFile)                                                                                            //if configurationFile is given as an argument, store new values, otherwise keep default values
     readConfigurationFile(configurationFileName);
   if(!foundMetric) {                                                                                                    //if metric is not given as an argument
-    cout << "Metric wasn't given in the program's arguments. Default value is given.. (euclidean)" << endl;
-    dataset.setMetric("euclidean");
+    cout << "Metric wasn't given in the program's arguments. Default value is given.. (manhattan)" << endl;
+    dataset.setMetric("manhattan");
   }
   else {
     if(find(supportedMetrics.begin(), supportedMetrics.end(), metric) == supportedMetrics.end()) {                      //check if metric is supported from the program
-      cout << "Unknown metric. Default value is given.. (euclidean)" << endl;
-      dataset.setMetric("euclidean");
+      cout << "Unknown metric. Default value is given.. (manhattan)" << endl;
+      dataset.setMetric("manhattan");
     }
     else
       dataset.setMetric(metric);

@@ -1,11 +1,11 @@
 #include "./hFiles/headers.h"
 #include "./hFiles/generalFunctions.h"
 
-/*~euclidean~*/
+/*~manhattan~*/
 /****************************************/
 
 //calculate h
-int euclideanProject(dVector &p, vector<double> &v, double &t) {
+int manhattanProject(dVector &p, vector<double> &v, double &t) {
   int d = p.getDimension();
   double sp = 0;                                                                //scalar product v*p
   for(int i=0; i<d; i++)
@@ -15,10 +15,10 @@ int euclideanProject(dVector &p, vector<double> &v, double &t) {
 };
 
 //generate a g vector with k*h
-vector<int> euclideanGenerateG(dVector &p, int k, vector<vector<double>> &v, vector<double> &t) {
+vector<int> manhattanGenerateG(dVector &p, int k, vector<vector<double>> &v, vector<double> &t) {
   vector<int> g;
   for(int i=0; i<k; i++) {
-    int h = euclideanProject(p, v[i], t[i]);
+    int h = manhattanProject(p, v[i], t[i]);
     g.push_back(h);
   }
   return g;
@@ -30,7 +30,7 @@ int cubeGenerateKey(dVector &p, int k, vector<vector<double>> &v, vector<double>
   vector<int> g;
   vector<vector<double>> usedV;
   for(int i=0; i<k; i++) {
-    int h = euclideanProject(p, v[i], t[i]);
+    int h = manhattanProject(p, v[i], t[i]);
     int f = ((h % 2) + 2) % 2;
     g.push_back(f);
   }
@@ -53,8 +53,8 @@ int fHushFunction(vector<int> &g, vector<int> &r, int n) {
   return f;
 };
 
-//calculate the euclidean distance between 2 vectors
-double euclideanDistance(vector<double> &x, vector<double> &y) {
+//calculate the manhattan distance between 2 vectors
+double manhattanDistance(vector<double> &x, vector<double> &y) {
   double distance = 0;
   for(int i=0; i<x.size(); i++)
     distance += pow(x[i]-y[i], 2);

@@ -1,6 +1,6 @@
 #include "./hFiles/headers.h"
 #include "./hFiles/hashTable.h"
-#include "./hFiles/euclidean.h"
+#include "./hFiles/manhattan.h"
 #include "./hFiles/cosine.h"
 #include "./hFiles/generalFunctions.h"
 /*~hashNode~*/
@@ -41,7 +41,7 @@ int hashNode::getIndex(void) {
 hashTable::hashTable(data &dataset, vector<int> &r, int k, string &algorithm) {
   this->table.max_load_factor(2);
   this->metric = dataset.getMetric();
-  if( dataset.getMetric() == "euclidean") {
+  if( dataset.getMetric() == "manhattan") {
     for(int j=0; j<k; j++) {
       vector<double> v;
       for(int i=0; i<dataset.getD(); i++) {
@@ -62,11 +62,11 @@ hashTable::hashTable(data &dataset, vector<int> &r, int k, string &algorithm) {
     }
   }
   for(int i=0; i<dataset.getN(); i++) {                                         //for every point in dataset
-    if( dataset.getMetric() == "euclidean") {
+    if( dataset.getMetric() == "manhattan") {
       int key;
       if(algorithm == "lsh") {
         dVector x = dataset.getdVector(i);
-        vector<int> g = euclideanGenerateG(x, k, this->kVs, this->kTs);         //generate a g vector
+        vector<int> g = manhattanGenerateG(x, k, this->kVs, this->kTs);         //generate a g vector
         key = fHushFunction(g, r, dataset.getN());                              //from that g ->generate f
         hashNode node(i, g);
         this->table.insert(make_pair(key, node));                               //insert the node to the table
