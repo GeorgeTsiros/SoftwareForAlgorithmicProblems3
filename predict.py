@@ -44,8 +44,8 @@ print('MAPE Loss: ', lossmape.numpy())  # Loss: 5e+08
 header = ['MAE: ' + str(lossmae.numpy()), ' MAPE: ' + str(lossmape.numpy()), ' MSE: ' + str(lossmse.numpy())]
 
 combinedResults = np.concatenate((actualDataLabels, result), axis=1)
-with open('new_representation.csv', 'wt') as csv_file:
+with open('predicted.csv', 'wt') as csv_file:
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(header) # write header
 
-pd.DataFrame(combinedResults).to_csv("new_representation.csv", mode='a')
+pd.DataFrame(combinedResults).to_csv("predicted.csv", mode='a')

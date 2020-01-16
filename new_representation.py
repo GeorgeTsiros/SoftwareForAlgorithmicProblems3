@@ -10,11 +10,19 @@ keras.backend.set_epsilon(1e-2)
 np.set_printoptions(threshold=sys.maxsize, precision=16)
 
 # Read files
+actualData = pd.read_csv('Datasets/actual.csv',header=None)
+
+testFile = sys.argv[2]
+
 actualData = pd.read_csv('Datasets/actual.csv')
-testingData = pd.read_csv('Datasets/nn_representations.csv')
+testingData = pd.read_csv(testFile)
 
 testingDataLabels = testingData.iloc[:, :1]
 testingDataValues = testingData.iloc[:, 1:]
+
+actualDataLabels = actualData.iloc[:, :1]
+actualDataValues = actualData.iloc[:, 1:]
+actualDataValues = actualDataValues.to_numpy()
 
 model= load_model('Datasets/WindDenseNN.h5')
 model.summary()
@@ -26,5 +34,10 @@ newModel = keras.Sequential()
 # activation defines the activation function of each layer
 newModel.add(layers.Dense(64, activation='relu', input_shape=(128,)))
 newModel.layers[0].set_weights(weights)
+
 result = newModel.predict(testingDataValues)
-np.savetxt('new_representation.csv', result, delimiter=',', fmt='%1.16f')   # X is an array
+
+
+combinedResults = np.concatenate((actualDataLabels, result), axis=1)
+# np.savetxt('new_representation.csv', result, delimiter=',', fmt='%1.16f') 
+pd.DataFrame(combinedResults).to_csv("predicted.csv", mode='a')  # X is an array
